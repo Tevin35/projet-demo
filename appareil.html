@@ -4,43 +4,103 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-	<title>Mes appareils</title>
+	<title>Les appareils</title>
 </head>
-<style>
-    .rouge{background-color: tomato};
-    .vert{background-color: green};
-</style>
-<h1>Les appareils</h1>
-<div id="app">
-    <h1 
-    class="info"
+<body>
+	<div class="container" id="app">
+		<div class="row">
+			<div class="col-xs-12">
 
-    v-bind:class="{ 'rouge': getColor() }"
-    >
-    [
-    { name:'TV',status:'allumé'},
-    { name:'Xbox',status:'éteint'},
-    { name:'PlayStation',status:'allumé'},
-],
-</h1>
+		<h2>Les Appareils</h2>
+
+		<ul class="list-group">
+		<li 
+		v-for= "(a,index) in tableau"
+		class="list-group-item"
+	v-bind:class="{ 
+	'list-group-item-success':  getAllume(index),
+	'list-group-item-danger':  getEteint(index),
+	}"		
+		>
+		<h4> {{ a.name }} -- {{a.status}}</h4>
+		<button 
+		@click="allumer(index)"
+		class="btn btn-success"> ON</button>
+		<button  
+		@click="eteindre(index)"
+		class="ml-2 btn btn-danger"> OFF</button> 
+	</li>
+	</ul>
+	<br>
+	<button 
+	@click="ajouter()"
+	class="btn btn-success">
+	<i class="fa fa-plus">Ajouter un appareil</i>
+	</button>
+	<br>
+	<br>
+	<button 
+	@click="toutAllumer()"
+	class="btn btn-success">ALL ON</button>
+
+	<button
+		@click="toutEteindre()"
+	  class="ml-2 btn btn-danger">ALL OFF</button>
 </div>
-
+</div>
+</div>
+<!-- etape 1 ajouter le CDN -->
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-
 <script>
-    const app = new Vue(
-      {
-        el :'#app',
-        data :
-        {
-          test:false,
-          },
-          methods:{
-              getColor(){
-                  return true;
-              }
-          }
-      });
-</script>
+const app = new Vue(
+	{
+		// je cible la balise html 
+		//que vue va utiliser
+		el:'#app',
+		data:{
+			tableau :
+			[
+			    { name:'TV oled',status:'allumé'},
+			    { name:'Xbox',status:'éteint'},
+			    { name:'PlayStation',status:'allumé'},
+			],
+		},
+		methods:{
+			getAllume(i){
+				if(this.tableau[i].status== 'allumé'){
+					return true;
+				}else{
+					return false;
+				}
+			},
+			getEteint(i){
+				if(this.tableau[i].status== 'allumé'){
+					return false;
+				}else{
+					return true;
+				}
+			},
+			allumer(i){
+				this.tableau[i].status = 'allumé';
+			},
+			eteindre(i){
+				this.tableau[i].status = 'éteint';
 
+			},
+			toutAllumer(){
+				for (let a of this.tableau){
+					a.status= 'allumé';
+				}
+			},
+			toutEteindre(){
+				for (let a of this.tableau){
+					a.status= 'éteint';
+				}
+
+			}
+		}
+
+	});
+</script>
+</body>
 </html>
