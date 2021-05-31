@@ -1,0 +1,27 @@
+<body>
+    <div id="maj">
+        <input v-model="mot">
+        <button @click="affiche()">GO</button>
+        <h3>{{ mot2 }}</h3>
+    </div>
+    <!-- cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        const app = new Vue({
+            el: '#maj',
+            data:{
+                mot: '',
+                mot2: '',
+            },
+            methods:
+            {
+                affiche()
+                {
+                    this.mot2 = this.mot.toUppercase();
+                    this.mot ='';
+                }
+            }
+        });
+    </script>
+
+</body>
